@@ -63,21 +63,21 @@ def format_court_columns(case_lines, fallback_idx):
     if " vs " in full_text.lower():
         parts = re.split(r'\s+vs\s+', full_text, flags=re.IGNORECASE)
         if len(parts) >= 2:
-            p1 = parts[0]
-            p2 = parts[1]
+            p1 = parts
+            p2 = parts
             
             p1_clean = re.sub(r'^\s*\d+\s+', '', p1)
             p1_clean = re.sub(r'[A-Z]{2,5}/\d+/\d+', '', p1_clean)
             
             counsel_split = re.split(r'\s{2,}', p2)
-            p2_clean = counsel_split[0]
+            p2_clean = counsel_split
             
             parties = f"{p1_clean.strip()}\n\nVS\n\n{p2_clean.strip()}"
             
             if len(counsel_split) > 1:
-                pet_counsel = counsel_split[1]
+                pet_counsel = counsel_split
             if len(counsel_split) > 2:
-                res_counsel = counsel_split[2]
+                res_counsel = counsel_split
 
     return [sr_no, case_info, parties, pet_counsel, res_counsel]
 
@@ -107,12 +107,19 @@ def create_summary_pdf(cases, search_name):
     else:
         for idx, case_lines in enumerate(cases, 1):
             cols = format_court_columns(case_lines, idx)
+            # Safe text mapping convert list items to individual strings to avoid any format errors
+            c0 = str(cols[0]).replace("\n", "<br/>")
+            c1 = str(cols[1]).replace("\n", "<br/>")
+            c2 = str(cols[2]).replace("\n", "<br/>")
+            c3 = str(cols[3]).replace("\n", "<br/>")
+            c4 = str(cols[4]).replace("\n", "<br/>")
+            
             table_data.append([
-                Paragraph(cols[0], cell_style),
-                Paragraph(cols[1].replace("\n", "<br/>"), cell_style),
-                Paragraph(cols[2].replace("\n", "<br/>"), cell_style),
-                Paragraph(cols[3].replace("\n", "<br/>"), cell_style),
-                Paragraph(cols[4].replace("\n", "<br/>"), cell_style)
+                Paragraph(c0, cell_style),
+                Paragraph(c1, cell_style),
+                Paragraph(c2, cell_style),
+                Paragraph(c3, cell_style),
+                Paragraph(c4, cell_style)
             ])
             
     column_widths = [40, 100, 312, 150, 150]
