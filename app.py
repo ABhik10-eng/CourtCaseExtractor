@@ -75,9 +75,9 @@ def format_court_columns(case_lines, fallback_idx):
             parties = f"{p1_clean.strip()}\n\nVS\n\n{p2_clean.strip()}"
             
             if len(counsel_split) > 1:
-                pet_counsel = counsel_split[1].strip()
+                pet_counsel = counsel_split[1]
             if len(counsel_split) > 2:
-                res_counsel = counsel_split[2].strip()
+                res_counsel = counsel_split[2]
 
     return [sr_no, case_info, parties, pet_counsel, res_counsel]
 
@@ -115,7 +115,7 @@ def create_summary_pdf(cases, search_name):
                 Paragraph(cols[4].replace("\n", "<br/>"), cell_style)
             ])
             
-    column_widths = [40, 120, 292, 150, 150]
+    column_widths = [40, 100, 292, 160, 160]
     
     court_table = Table(table_data, colWidths=column_widths, repeatRows=1)
     court_table.setStyle(TableStyle([
