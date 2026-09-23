@@ -115,7 +115,7 @@ def create_summary_pdf(cases, search_name):
                 Paragraph(cols[4].replace("\n", "<br/>"), cell_style)
             ])
             
-    column_widths = [40, 100, 292, 160, 160]
+    column_widths = [40, 100, 312, 150, 150]
     
     court_table = Table(table_data, colWidths=column_widths, repeatRows=1)
     court_table.setStyle(TableStyle([
